@@ -1,0 +1,7 @@
+{
+  "name": "table-cup-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

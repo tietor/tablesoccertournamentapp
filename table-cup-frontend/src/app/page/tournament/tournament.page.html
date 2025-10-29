@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-thumbnail class="ion-margin-start" slot="start">
+      <img src="../assets/logo.png">
+    </ion-thumbnail>
+    <ion-title id="center-text">
+      Turniere
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let tournament of tournaments">
+    <ion-card-header>
+      <ion-card-title>{{ tournament.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>Aktueller Status: {{ tournament.status.displayStatus }}</ion-item>
+      <ion-item *ngIf="isStatusRunning(tournament) && tournament.phase !== null">Aktuelle
+        Turnierphase: {{ tournament.phase.displayPhase }}
+      </ion-item>
+      <ion-item *ngIf="authService.isUserTournamentDirector() && isStatusOpen(tournament)">
+        <ion-text color="warning">Achtung: Turnier kann ab 36 Teilnehmern erfolgreich gestartet werden. Die
+          Teilnehmerzahl darf nicht mehr als 64 sein. Die Teilnehmerzahl muss durch 4 teilbar sein.<br>Beispiele für
+          gültige Teilnehmerzahl: 36, 40, 44, 48
+        </ion-text>
+      </ion-item>
+      <ion-item color="secondary"
+                *ngIf="!tournament.userAllowedToJoinTournament && isStatusOpen(tournament) && authService.isUserAttendee()">
+        Du bist dem Turnier erfolgreich beigetreten. Bitte warte bis der Turnierleiter das Turnier startet.
+      </ion-item>
+      <ion-button *ngIf="tournament.userAllowedToJoinTournament" (click)="joinUserToTournament(tournament)"
+                  color="success">Turnier beitreten
+      </ion-button>
+      <ion-button color="primary"
+                  *ngIf="(authService.isUserTournamentDirector() && isStatusRunning(tournament)) ||  (authService.isUserAttendee() && tournament.userInTournament && !tournament.userDisqualified && tournament.status.internalStatus === 'RUNNING')"
+                  (click)="displayGamePage(tournament.uuid)">
+        Spiele
+        anzeigen
+      </ion-button>
+      <ion-button *ngIf="authService.isUserTournamentDirector() && isStatusOpen(tournament)"
+                  color="success" (click)="startTournament(tournament.uuid)">Turnier starten
+      </ion-button>
+      <ion-button
+        *ngIf="authService.isUserTournamentDirector() && isStatusRunning(tournament) && !isPhaseFinal(tournament)"
+        (click)="startNextPhase(tournament.uuid)"
+        color="success">Nächste Phase starten
+      </ion-button>
+      <ion-button *ngIf="isStatusRunning(tournament)"
+                  (click)="displayParticipantsInCurrentPhase(tournament.uuid)"
+                  color="warning">Übrige Spieler anzeigen
+      </ion-button>
+      <ion-button (click)="displayAllParticipants(tournament.uuid)"
+                  color="secondary">Alle Spieler anzeigen
+      </ion-button>
+      <ion-button *ngIf="isStatusRunning(tournament) && isPhaseFinal(tournament)"
+                  color="danger" (click)="closeTournament(tournament.uuid)">Turnier abschliessen
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-button *ngIf="authService.isUserTournamentDirector()" id="present-create-tournament" shape="round"
+                color="success">
+      Turnier erstellen
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-fab>
+
+  <ion-alert trigger="present-create-tournament" header="Turnier erstellen" [buttons]="alertButtons"
+             [inputs]="alertInputs">
+
+  </ion-alert>
+
+</ion-content>

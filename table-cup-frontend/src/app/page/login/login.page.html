@@ -1,0 +1,37 @@
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Login</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <ion-item>
+              <ion-input label="Benutzername" labelPlacement="floating" [required]="true" type="text"
+                         formControlName="username"></ion-input>
+            </ion-item>
+            <ion-label class="ion-margin" color="danger"
+                       *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors">Benutzername
+              fehlt!
+            </ion-label>
+            <ion-item>
+              <ion-input label="Password" labelPlacement="floating" type="password"
+                         formControlName="password"></ion-input>
+            </ion-item>
+            <ion-label class="ion-margin" color="danger"
+                       *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors">Passwort
+              fehlt!
+            </ion-label>
+            <ion-button type="submit" size="full" shape="round" class="ion-padding-horizontal ion-margin-top">Login
+              <ion-icon slot="end" name="log-in-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="redirectToRegisterPage()" size="full" fill="outline" shape="round" color="medium" class="ion-padding-horizontal">Ich habe kein Konto
+              <ion-icon slot="end" name="person-add-outline"></ion-icon>
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,57 @@
+.team-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.team-red-title {
+  font-weight: bold;
+  color: #FF0004;
+}
+
+.team-blue-title {
+  font-weight: bold;
+  color: #0069FF;
+}
+
+.user-information {
+  width: 100%;
+}
+
+.team-blue-container {
+  width: 50%;
+}
+
+.team-red-container {
+  width: 50%;
+  margin-left: 20px;
+}
+
+.result-text {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  color: #92949C;
+}
+
+.final-result-text {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  color: #2FD36F;
+}
+
+#text-align-center {
+  text-align: center;
+}
+
+p {
+  color: white;
+}
+
+.blue-team-winner-title {
+  color: #0069FF;
+}
+
+.red-team-winner-title {
+  color: #FF0004;
+}

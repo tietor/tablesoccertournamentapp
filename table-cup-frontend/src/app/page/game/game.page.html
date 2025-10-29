@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="tournaments"></ion-back-button>
+    </ion-buttons>
+    <ion-title id="text-align-center">Spiele</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let game of games">
+    <ion-card-header>
+      <ion-card-title class="blue-team-winner-title" *ngIf="game.pointsOfTeamBlue > game.pointsOfTeamRed">Gewinner: Team
+        Blau
+      </ion-card-title>
+      <ion-card-title class="red-team-winner-title" *ngIf="game.pointsOfTeamRed > game.pointsOfTeamBlue">Gewinner: Team
+        Rot
+      </ion-card-title>
+      <ion-card-title *ngIf="game.pointsOfTeamBlue === 0 && game.pointsOfTeamRed === 0">Gewinner: Unbekannt
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p
+        [ngClass]="{'final-result-text': game.pointsOfTeamBlue > 0 || game.pointsOfTeamRed > 0, 'result-text': game.pointsOfTeamRed > 0 && game.pointsOfTeamBlue > 0}">
+        Resultat: {{ game.pointsOfTeamBlue }} : {{ game.pointsOfTeamRed }}</p>
+      <div class="team-container">
+        <div class="team-blue-container">
+          <p class="team-blue-title">Team Blau</p>
+
+          <p *ngFor="let playerTeamBlue of game.playersOfBlueTeam" class="user-information">{{ playerTeamBlue }}</p>
+        </div>
+        <div class="team-red-container">
+          <p class="team-red-title">Team Rot</p>
+          <p *ngFor="let playerTeamRed of game.playersOfRedTeam" class="user-information">{{ playerTeamRed }}</p>
+        </div>
+      </div>
+      <ion-button *ngIf="game.pointsOfTeamBlue === 0 && game.pointsOfTeamRed === 0" mode="md" color="success"
+                  (click)="displayAddResultsModal(game, 'create')">
+        Resultat hinzufügen
+      </ion-button>
+      <ion-button *ngIf="game.pointsOfTeamBlue > 0 || game.pointsOfTeamRed > 0" mode="md" color="success"
+                  (click)="displayAddResultsModal(game, 'update')">
+        Resultat anpassen
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

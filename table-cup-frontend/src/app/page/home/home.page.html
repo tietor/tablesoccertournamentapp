@@ -1,0 +1,20 @@
+<ion-content>
+  <div class="flex-center">
+    <ion-card class="ion-padding">
+      <ion-item lines="none">
+        <ion-img class="ion-padding"
+                 src="../assets/logo.png"></ion-img>
+        <ion-card-header>
+          <ion-card-title class="ion-padding">Willkommen bei der Töggeliturnier App</ion-card-title>
+          <ion-button (click)="loadLoginPage()" size="full" shape="round" class="ion-padding-horizontal ion-margin-top">
+            Login
+            <ion-icon slot="end" name="log-in-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="loadRegisterPage()" size="full" shape="round" color="secondary" class="ion-padding-horizontal">Registrieren
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+          </ion-button>
+        </ion-card-header>
+      </ion-item>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Registrieren</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <ion-item>
+              <ion-input label="Benutzername" labelPlacement="floating" formControlName="username" [required]="true"
+                         [minlength]="5"
+                         [maxlength]="10"></ion-input>
+            </ion-item>
+            <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.errors?.['minlength']">
+              <ion-label class="ion-margin" color="danger">
+                Benutzername
+                zu kurz!
+              </ion-label>
+            </div>
+            <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.errors?.['required']">
+              <ion-label class="ion-margin" color="danger">Benutzername fehlt!</ion-label>
+            </div>
+            <ion-label class="ion-margin">* Minimum 5 Zeichen</ion-label>
+            <br>
+            <ion-label class="ion-margin">* Maximum 10 Zeichen</ion-label>
+            <ion-item>
+              <ion-input type="password" label="Password" formControlName="password" labelPlacement="floating"
+                         [required]="true" [minlength]="8"
+                         [maxlength]="30"></ion-input>
+            </ion-item>
+            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength']">
+              <ion-label class="ion-margin" color="danger">
+                Passwort
+                zu kurz!
+              </ion-label>
+            </div>
+            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']">
+              <ion-label class="ion-margin" color="danger">
+                Passwort
+                fehlt!
+              </ion-label>
+            </div>
+            <ion-label class="ion-margin">* Minimum 8 Zeichen</ion-label>
+            <br>
+            <ion-label class="ion-margin">* Maximum 30 Zeichen</ion-label>
+            <ion-item>
+              <ion-input type="password" formControlName="confirmPassword" label="Passwort bestätigen"
+                         labelPlacement="floating" [required]="true"></ion-input>
+            </ion-item>
+            <ion-label class="ion-margin" color="danger"
+                       *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors?.['required']">
+              Bitte Passwort bestätigen!
+            </ion-label>
+            <ion-label class="ion-margin" color="danger"
+                       *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.errors?.['passwordMismatch']">
+              Passwörter sind nicht identisch!
+            </ion-label>
+            <ion-item class="ion-margin-top">
+              <ion-select label="Rolle" fill="outline" placeholder="Rolle auswählen" formControlName="role">
+                <ion-select-option *ngFor="let role of roles" [value]="role.internalName">{{ role.displayName }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-label class="ion-margin" color="danger"
+                       *ngIf="registerForm.get('role')?.touched && registerForm.get('role')?.errors?.['required']">
+              Bitte Rolle auswählen!
+            </ion-label>
+            <ion-button type="submit" size="full" shape="round" class="ion-padding-horizontal ion-margin-top">
+              Registrieren
+              <ion-icon slot="end" name="person-add-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="redirectToLoginPage()" size="full" fill="outline" shape="round" color="medium"
+                        class="ion-padding-horizontal">Ich habe
+              schon ein Konto
+              <ion-icon slot="end" name="log-in-outline"></ion-icon>
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>
